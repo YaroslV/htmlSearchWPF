@@ -1,19 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using ConsoleApplication1.Manager;
-using System.Collections.Concurrent;
 
 namespace WpfTestTask
 {
@@ -33,7 +21,12 @@ namespace WpfTestTask
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            resultBlock.Text = "";
+            this.Dispatcher.Invoke((Action)delegate
+            {
+                resultBlock.Text = "->";
+                StopButton.IsEnabled = true;
+            });
+            
             //TODO 
             //write checking for input parameters 
             int threadNumber = 1;
@@ -45,6 +38,12 @@ namespace WpfTestTask
             htmlSearchManager = new HtmlSearchManager(inputUrlTxtBox.Text, textToSearchTxtBox.Text,
                 urlNumber, threadNumber, WriteToResultTextBox);
             htmlSearchManager.StartSearch();
+            
+            this.Dispatcher.Invoke((Action)delegate
+            {
+                StopButton.IsEnabled = false;
+            });
+
         }
 
         //output method

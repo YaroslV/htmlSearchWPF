@@ -2,8 +2,6 @@ c:\users\nocciola\documents\visual studio 2013\Projects\WpfTestTask\WpfTestTask\
 c:\users\nocciola\documents\visual studio 2013\Projects\WpfTestTask\WpfTestTask\bin\Debug\WpfTestTask.exe
 c:\users\nocciola\documents\visual studio 2013\Projects\WpfTestTask\WpfTestTask\bin\Debug\WpfTestTask.pdb
 c:\users\nocciola\documents\visual studio 2013\Projects\WpfTestTask\WpfTestTask\obj\Debug\WpfTestTask.csprojResolveAssemblyReference.cache
-c:\users\nocciola\documents\visual studio 2013\Projects\WpfTestTask\WpfTestTask\obj\Debug\MainWindow.baml
-c:\users\nocciola\documents\visual studio 2013\Projects\WpfTestTask\WpfTestTask\obj\Debug\MainWindow.g.cs
 c:\users\nocciola\documents\visual studio 2013\Projects\WpfTestTask\WpfTestTask\obj\Debug\App.g.cs
 c:\users\nocciola\documents\visual studio 2013\Projects\WpfTestTask\WpfTestTask\obj\Debug\WpfTestTask_MarkupCompile.cache
 c:\users\nocciola\documents\visual studio 2013\Projects\WpfTestTask\WpfTestTask\obj\Debug\WpfTestTask.g.resources
@@ -11,3 +9,5 @@ c:\users\nocciola\documents\visual studio 2013\Projects\WpfTestTask\WpfTestTask\
 c:\users\nocciola\documents\visual studio 2013\Projects\WpfTestTask\WpfTestTask\obj\Debug\WpfTestTask.csproj.GenerateResource.Cache
 c:\users\nocciola\documents\visual studio 2013\Projects\WpfTestTask\WpfTestTask\obj\Debug\WpfTestTask.exe
 c:\users\nocciola\documents\visual studio 2013\Projects\WpfTestTask\WpfTestTask\obj\Debug\WpfTestTask.pdb
+C:\Users\Nocciola\Documents\Visual Studio 2013\Projects\WpfTestTask\WpfTestTask\obj\Debug\MainWindow.baml
+C:\Users\Nocciola\Documents\Visual Studio 2013\Projects\WpfTestTask\WpfTestTask\obj\Debug\MainWindow.g.cs
