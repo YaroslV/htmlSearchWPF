@@ -47,7 +47,7 @@ namespace ConsoleApplication1.Manager
         {
             string startPageUrl = GetHTMLFromUrl(_startUrl);
             
-            Regex textPattern = new Regex("\b"+_textToSearch + "\b");
+            Regex textPattern = new Regex("(?i)"+_textToSearch);
             var startMatcher = textPattern.Match(startPageUrl);
             int textOccurencesOnStartPage = 0;
             while (startMatcher.Success)
@@ -59,15 +59,15 @@ namespace ConsoleApplication1.Manager
 
             var urlFromStartPage = GetUrlFromPage(startPageUrl, _numberOfUrlsToSearch);
             int urlCounter = 0;
-            foreach (string url in urlFromStartPage)
+            foreach (string url in urlFromStartPage)                
             {
                 Task<int> t = _taskFactory.StartNew(() =>
                 {
                     if (_cancelToken.IsCancellationRequested)
                         return 0;
-                    string HTMLText = GetHTMLFromUrl(url);                   
+                    string HTMLText = GetHTMLFromUrl(url);
 
-                    Regex textToSearch = new Regex(_textToSearch);
+                    Regex textToSearch = new Regex("(?i)"+_textToSearch);
                     var matcher = textToSearch.Match(HTMLText);
                     int textCounter = 0;
                     while (matcher.Success)
@@ -84,7 +84,14 @@ namespace ConsoleApplication1.Manager
                 var awaiter = t.GetAwaiter();
                 awaiter.OnCompleted(() =>
                 {
-                    _outputMethod(String.Format("{2}  Task for {0} finished. Has founded {1} occurence(s)\n",url,t.Result, i));
+                    try
+                    {
+                        _outputMethod(String.Format("{2}  Task for {0} finished.\nHas founded {1} occurence(s)\n", url, t.Result, i));
+                    }
+                    catch(Exception ex)
+                    {
+                        _outputMethod("Task was stopped\n");
+                    }
                 });
             }
         }

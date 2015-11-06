@@ -21,11 +21,11 @@ namespace WpfTestTask
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Dispatcher.Invoke((Action)delegate
-            {
-                resultBlock.Text = "->";
-                StopButton.IsEnabled = true;
-            });
+
+            outputStringBuilder.Clear();
+            resultBlock.Text = "";
+            StopButton.IsEnabled = true;
+           
             
             //TODO 
             //write checking for input parameters 
@@ -39,11 +39,7 @@ namespace WpfTestTask
                 urlNumber, threadNumber, WriteToResultTextBox);
             htmlSearchManager.StartSearch();
             
-            this.Dispatcher.Invoke((Action)delegate
-            {
-                StopButton.IsEnabled = false;
-            });
-
+            
         }
 
         //output method
@@ -61,7 +57,7 @@ namespace WpfTestTask
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
             htmlSearchManager.StopSearch();
-            resultBlock.Text = "Execution stopped...";
+            resultBlock.Text += "Execution stopped...";
         }
     }
 }

@@ -10,7 +10,7 @@
     <TextBox Name="textToSearchTxtBox"></TextBox>
     <StackPanel Orientation="Horizontal">
         <Button Margin="10" Click="StartButton_Click" >Start Search</Button>
-        <Button Margin="10" Click="StopButton_Click" IsEnabled="False" Name="StopButton">Stop Search</Button>
+        <Button Margin="10" Click="StopButton_Click" Name="StopButton">Stop Search</Button>
         <Label Margin="10">Max thread number:</Label>
                 <TextBox Name="threadNum" Margin="10" MinWidth="30" Text="1"></TextBox>
         <Label Margin="10">Max scanned url:</Label>
