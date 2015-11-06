@@ -43,9 +43,11 @@ namespace ConsoleApplication1.Manager
         {
             _cancelTokenSource.Cancel();
         }
-        public void StartSearch()
+        public async void StartSearch(string sUrl = null)
         {
-            string startPageUrl = GetHTMLFromUrl(_startUrl);
+            if (sUrl == null)
+                sUrl = _startUrl;
+            string startPageUrl = await GetHTMLAsync(sUrl);
             
             Regex textPattern = new Regex("(?i)"+_textToSearch);
             var startMatcher = textPattern.Match(startPageUrl);
@@ -59,44 +61,43 @@ namespace ConsoleApplication1.Manager
 
             var urlFromStartPage = GetUrlFromPage(startPageUrl, _numberOfUrlsToSearch);
             int urlCounter = 0;
-            foreach (string url in urlFromStartPage)                
+            foreach (string url in urlFromStartPage)
             {
-                Task<int> t = _taskFactory.StartNew(() =>
-                {
-                    if (_cancelToken.IsCancellationRequested)
-                        return 0;
-                    string HTMLText = GetHTMLFromUrl(url);
-
-                    Regex textToSearch = new Regex("(?i)"+_textToSearch);
-                    var matcher = textToSearch.Match(HTMLText);
-                    int textCounter = 0;
-                    while (matcher.Success)
-                    {
-                        textCounter++;
-                        matcher = matcher.NextMatch();  
-                    }
-                    return textCounter;
-                });
-                
                 int i = urlCounter;
                 urlCounter++;
-                
-                var awaiter = t.GetAwaiter();
-                awaiter.OnCompleted(() =>
+                try
                 {
-                    try
-                    {
-                        _outputMethod(String.Format("{2}  Task for {0} finished.\nHas founded {1} occurence(s)\n", url, awaiter.GetResult(), i));
-                    }
-                    catch(Exception ex)
-                    {
-                        _outputMethod("Task was stopped\n");
-                    }
-                });
-            }
-        }
+                    int occurNum = await GetOccurences(url);
 
-        
+                    _outputMethod(String.Format("{2}  Task for {0} finished.\nHas founded {1} occurence(s)\n", url, occurNum, i));
+
+                }
+                catch (Exception ex)
+                {
+                    //task was stopped
+                }
+            }
+        }        
+
+        private Task<int> GetOccurences(string url)
+        {
+           return _taskFactory.StartNew(() =>
+            {
+                if (_cancelToken.IsCancellationRequested)
+                    return 0;
+                string HTMLText = GetHTMLFromUrl(url);
+
+                Regex textToSearch = new Regex("(?i)" + _textToSearch);
+                var matcher = textToSearch.Match(HTMLText);
+                int textCounter = 0;
+                while (matcher.Success)
+                {
+                    textCounter++;
+                    matcher = matcher.NextMatch();
+                }
+                return textCounter;
+            });
+        }
 
         private IEnumerable<string> GetUrlFromPage(string HTMLText, int maxNumberOfUrl)
         {
@@ -113,6 +114,14 @@ namespace ConsoleApplication1.Manager
                 }
             }
             return urlList;
+        }
+
+        private Task<string> GetHTMLAsync(string url)
+        {
+            return _taskFactory.StartNew(() =>
+                {
+                    return GetHTMLFromUrl(url);
+                });
         }
 
         private string GetHTMLFromUrl(string url)
