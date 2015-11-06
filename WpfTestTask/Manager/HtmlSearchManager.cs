@@ -86,7 +86,7 @@ namespace ConsoleApplication1.Manager
                 {
                     try
                     {
-                        _outputMethod(String.Format("{2}  Task for {0} finished.\nHas founded {1} occurence(s)\n", url, t.Result, i));
+                        _outputMethod(String.Format("{2}  Task for {0} finished.\nHas founded {1} occurence(s)\n", url, awaiter.GetResult(), i));
                     }
                     catch(Exception ex)
                     {
@@ -95,6 +95,8 @@ namespace ConsoleApplication1.Manager
                 });
             }
         }
+
+        
 
         private IEnumerable<string> GetUrlFromPage(string HTMLText, int maxNumberOfUrl)
         {
